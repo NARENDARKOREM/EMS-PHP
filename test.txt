@@ -1,0 +1,56 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$pwd = "";
+$dbname = "ems";
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $pwd);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // $sql = "CREATE DATABASE ems";
+    // $conn->exec($sql);
+    // echo "Database Created Successfully";
+    // echo "database connected successfully";
+    // $sql1 = "CREATE TABLE users(
+    //     id INT auto_increment PRIMARY KEY,
+    //     name VARCHAR(255) NOT NULL,
+    //     email VARCHAR(255) NOT NULL,
+    //     username VARCHAR(255) NOT NULL,
+    //     password VARCHAR(255) NOT NULL,
+    //     role ENUM ('admin', 'employee'),
+    //     CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    // )";
+
+
+    // $sql2 = "CREATE TABLE tasks(
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     title VARCHAR(255) NOT NULL,
+    //     description TEXT,
+    //     assigned_to INT,
+    //     status ENUM('pending', 'in_progress', 'completed') DEFAULT 'pending',
+    //     FOREIGN KEY (assigned_to) REFERENCES users(id)
+    // )";
+
+    // $sql3 = "CREATE TABLE chats(
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     sender_id INT NOT NULL,
+    //     receiver_id INT DEFAULT NULL,
+    //     group_id BOOLEAN DEFAULT FALSE,
+    //     message TEXT NOT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY(sender_id) REFERENCES users(id),
+    //     FOREIGN KEY(receiver_id) REFERENCES users(id)
+    // )";
+
+    // $conn->exec($sql1);
+    // $conn->exec($sql2);
+    // $conn->exec($sql3);
+
+    // echo "Tables Created Successfully";
+    return $conn;
+    echo "database connected succesfully.";
+} catch (PDOException $e) {
+    // echo "ERROR" . "<br>" . $e->getMessage();
+    echo "Connection Failed: " . $e->getMessage();
+    exit;
+}
