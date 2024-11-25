@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../includes/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -15,7 +16,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':duedate', $duedate);
         $stmt->execute();
 
-        header("Location: admin_dashboard.php");
+        // Fetch the assigned user's name for the success message
+        $stmt = $conn->prepare("SELECT name FROM users WHERE id = :id");
+        $stmt->bindParam(':id', $assigned_to);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user_name = $user['name'];
+
+        $_SESSION['success_message'] = "Task successfully created and assigned to " . $user_name . ".";
+        header("Location: create_task.php");
         exit();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
@@ -44,6 +53,14 @@ try {
 <body>
     <div class="container mt-4">
         <h2>Create Task</h2>
+        
+        <!-- Display success message -->
+        <?php if (isset($_SESSION['success_message'])) { ?>
+            <div class="alert alert-success">
+                <?php echo $_SESSION['success_message']; unset($_SESSION['success_message']); ?>
+            </div>
+        <?php } ?>
+        
         <form method="post">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>

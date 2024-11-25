@@ -4,6 +4,42 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../index.php?signup=success");
     exit();
 }
+
+include '../includes/db.php';
+
+$user_id = $_SESSION['user_id'];
+
+try {
+    // Count total tasks assigned to the user
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total_tasks FROM tasks WHERE assigned_to = :user_id");
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_tasks = $result['total_tasks'];
+
+    // Count pending tasks
+    $stmt = $conn->prepare("SELECT COUNT(*) AS pending_tasks FROM tasks WHERE assigned_to = :user_id AND status = 'pending'");
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $pending_tasks = $result['pending_tasks'];
+
+    // Count tasks in progress
+    $stmt = $conn->prepare("SELECT COUNT(*) AS progress_tasks FROM tasks WHERE assigned_to = :user_id AND status = 'in_progress'");
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $progress_tasks = $result['progress_tasks'];
+
+    // Count completed tasks
+    $stmt = $conn->prepare("SELECT COUNT(*) AS completed_tasks FROM tasks WHERE assigned_to = :user_id AND status = 'completed'");
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $completed_tasks = $result['completed_tasks'];
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +48,7 @@ if (!isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>User Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .sidebar {
@@ -64,7 +100,7 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 
 <body>
-    <!-- sidebar -->
+    <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo">
             <h3>Logo</h3>
@@ -73,6 +109,11 @@ if (!isset($_SESSION['user_id'])) {
             <a href="dashboard.php">
                 <div class="dashboard">
                     <h3>Dashboard</h3>
+                </div>
+            </a>
+            <a href="my_tasks.php">
+                <div class="profile">
+                    <h3>My Tasks</h3>
                 </div>
             </a>
             <a href="profile.php">
@@ -85,7 +126,7 @@ if (!isset($_SESSION['user_id'])) {
                     <h3>Notifications</h3>
                 </div>
             </a>
-            <a href="chats.php">
+            <a href="../chats/chats.php">
                 <div class="chats">
                     <h3>Chats</h3>
                 </div>
@@ -105,21 +146,21 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="col-md-4">
                     <div class="dashboard-box">
                         <a href="tasks.php">
-                            <h4>No of Tasks</h4>
+                            <h4><?php echo $total_tasks; ?> No of Tasks</h4>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="dashboard-box">
-                        <a href="overdue.php">
-                            <h4>No of Overdue</h4>
+                        <a href="pending_tasks.php">
+                            <h4><?php echo $pending_tasks; ?> No of Pending Tasks</h4>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="dashboard-box">
-                        <a href="deadlines.php">
-                            <h4>No of Deadline</h4>
+                        <a href="progress_tasks.php">
+                            <h4><?php echo $progress_tasks; ?> No of In Progress Tasks</h4>
                         </a>
                     </div>
                 </div>
@@ -127,22 +168,22 @@ if (!isset($_SESSION['user_id'])) {
             <div class="row mb-4">
                 <div class="col-md-4">
                     <div class="dashboard-box">
-                        <a href="pending.php">
-                            <h4>No of Pending</h4>
+                        <a href="completed_tasks.php">
+                            <h4><?php echo $completed_tasks; ?> No of Completed Tasks</h4>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="dashboard-box">
-                        <a href="progress.php">
-                            <h4>No of Progress</h4>
+                        <a href="notifications.php">
+                            <h4>Notifications</h4>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="dashboard-box">
-                        <a href="completed.php">
-                            <h4>No of Completed</h4>
+                        <a href="../chats/chats.php">
+                            <h4>Chats</h4>
                         </a>
                     </div>
                 </div>
