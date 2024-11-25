@@ -27,17 +27,20 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Tasks</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script>
-        function showAlert(message) {
-            alert(message);
-        }
-    </script>
 </head>
 
 <body>
     <div class="container mt-4">
         <a href="dashboard.php">Go back!</a>
         <h2>My Tasks</h2>
+
+        <!-- Display success message -->
+        <?php if (isset($_SESSION['success_message'])) { ?>
+            <div class="alert alert-success">
+                <?php echo $_SESSION['success_message']; unset($_SESSION['success_message']); ?>
+            </div>
+        <?php } ?>
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -60,14 +63,14 @@ try {
                                 <input type="hidden" name="task_id" value="<?php echo $task['id']; ?>">
                                 <select name="status" class="form-control" onchange="this.form.submit()">
                                     <option value="pending" <?php if ($task['status'] == 'pending') echo 'selected'; ?>>Pending</option>
-                                    <option value="in_progress" <?php if ($task['status'] == 'in_progress') echo 'selected'; ?>>In Progress</option>
+                                    <option value="in progress" <?php if ($task['status'] == 'in progress') echo 'selected'; ?>>In Progress</option>
                                     <option value="completed" <?php if ($task['status'] == 'completed') echo 'selected'; ?>>Completed</option>
                                 </select>
                             </form>
                         </td>
                         <td><?php echo $task['duedate']; ?></td>
                         <td>
-                            <a href="edit_task.php?id=<?php echo $task['id']; ?>" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="user_edit_task.php?id=<?php echo $task['id']; ?>" class="btn btn-primary btn-sm">Edit</a>
                             <a href="delete_task.php?id=<?php echo $task['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
                         </td>
                     </tr>

@@ -12,17 +12,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $status = $_POST['status'];
 
     try {
+        // Update status value to match exactly with ENUM values
         $stmt = $conn->prepare("UPDATE tasks SET status = :status WHERE id = :id");
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':id', $task_id);
         $stmt->execute();
 
         if ($status === 'completed') {
-            echo "<script>alert('Task completed successfully!'); window.location.href = 'my_tasks.php';</script>";
+            $_SESSION['success_message'] = "Task completed successfully!";
+        } else if ($status === 'in progress') {
+            $_SESSION['success_message'] = "Task status changed to 'In Progress' successfully!";
         } else {
-            header("Location: my_tasks.php");
-            exit();
+            $_SESSION['success_message'] = "Task status updated successfully!";
         }
+        header("Location: my_tasks.php");
+        exit();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

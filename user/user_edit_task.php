@@ -11,27 +11,23 @@ $task_id = $_GET['id'];
 
 try {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $title = $_POST['title'];
-        $description = $_POST['description'];
         $status = $_POST['status'];
-        $duedate = $_POST['duedate'];
 
-        $stmt = $conn->prepare("UPDATE tasks SET title = :title, description = :description, status = :status, duedate = :duedate WHERE id = :id");
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':description', $description);
+        $stmt = $conn->prepare("UPDATE tasks SET status = :status WHERE id = :id");
         $stmt->bindParam(':status', $status);
-        $stmt->bindParam(':duedate', $duedate);
         $stmt->bindParam(':id', $task_id);
         $stmt->execute();
 
         if ($status === 'completed') {
-            echo "<script>alert('Task completed successfully!'); window.location.href = 'my_tasks.php';</script>";
+            $_SESSION['success_message'] = "Task completed successfully!";
+            header("Location: my_tasks.php");
+            exit();
         } else {
             header("Location: my_tasks.php");
             exit();
         }
     } else {
-        $stmt = $conn->prepare("SELECT * FROM tasks WHERE id = :id");
+        $stmt = $conn->prepare("SELECT title, description, status, duedate FROM tasks WHERE id = :id");
         $stmt->bindParam(':id', $task_id);
         $stmt->execute();
         $task = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -54,28 +50,34 @@ try {
 <body>
     <div class="container mt-4">
         <h2>Edit Task</h2>
+        <!-- Display success message -->
+        <?php if (isset($_SESSION['success_message'])) { ?>
+            <div class="alert alert-success">
+                <?php echo $_SESSION['success_message']; unset($_SESSION['success_message']); ?>
+            </div>
+        <?php } ?>
         <form method="post">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" name="title" value="<?php echo $task['title']; ?>" required>
+                <input type="text" class="form-control" id="title" name="title" value="<?php echo $task['title']; ?>" readonly>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" name="description" rows="3" required><?php echo $task['description']; ?></textarea>
+                <textarea class="form-control" id="description" name="description" rows="3" readonly><?php echo $task['description']; ?></textarea>
             </div>
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-control" id="status" name="status" required>
                     <option value="pending" <?php if ($task['status'] == 'pending') echo 'selected'; ?>>Pending</option>
-                    <option value="in_progress" <?php if ($task['status'] == 'in_progress') echo 'selected'; ?>>In Progress</option>
+                    <option value="in progress" <?php if ($task['status'] == 'in progress') echo 'selected'; ?>>In Progress</option>
                     <option value="completed" <?php if ($task['status'] == 'completed') echo 'selected'; ?>>Completed</option>
                 </select>
             </div>
             <div class="mb-3">
                 <label for="duedate" class="form-label">Due Date</label>
-                <input type="date" class="form-control" id="duedate" name="duedate" value="<?php echo $task['duedate']; ?>" required>
+                <input type="date" class="form-control" id="duedate" name="duedate" value="<?php echo $task['duedate']; ?>" readonly>
             </div>
-            <button type="submit" class="btn btn-primary">Update Task</button>
+            <button type="submit" class="btn btsn-primary">Update Status</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
