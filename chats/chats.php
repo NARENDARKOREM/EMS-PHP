@@ -27,7 +27,19 @@ try {
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
+
+
+$redirect_url = "../index.php"; // Default redirect for unexpected cases
+
+if (isset($_SESSION['admin_id'])) {
+    $redirect_url = "../admin/admin-dashboard.php"; // Redirect for admins
+} elseif (isset($_SESSION['user_id'])) {
+    $redirect_url = "../user/dashboard.php"; // Redirect for employees
+} elseif (isset($_SERVER['HTTP_REFERER'])) {
+    $redirect_url = $_SERVER['HTTP_REFERER']; // Redirect to the previous page
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -155,8 +167,8 @@ try {
     <div class="container mt-4">
         <div class="chat-container">
             <div class="user-list">
-                <a href="../user/dashboard.php">Go back!</a>
-                <h4>Users</h4>
+            <a href="<?php echo htmlspecialchars($redirect_url); ?>">Go back!</a>
+            <h4>Users</h4>
                 <ul class="list-group">
                     <li class="list-group-item active">Group Chat</li>
                     <?php foreach ($users as $user) { ?>

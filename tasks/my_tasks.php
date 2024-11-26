@@ -17,6 +17,17 @@ try {
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
+
+// Back button Url
+$redirect_url = "../index.php"; 
+
+if (isset($_SESSION['admin_id'])) {
+    $redirect_url = "../admin/admin-dashboard.php"; 
+} elseif (isset($_SESSION['user_id'])) {
+    $redirect_url = "../user/dashboard.php"; 
+} elseif (isset($_SERVER['HTTP_REFERER'])) {
+    $redirect_url = $_SERVER['HTTP_REFERER']; 
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,8 +42,11 @@ try {
 
 <body>
     <div class="container mt-4">
-        <a href="dashboard.php">Go back!</a>
-        <h2>My Tasks</h2>
+    <a href="<?php echo htmlspecialchars($redirect_url); ?>">Go back!</a>
+    <h2>My Tasks</h2>
+
+        <!-- Button to navigate to task creation -->
+        <a href="user_create_task.php" class="btn btn-success mb-3">Create New Task</a>
 
         <!-- Display success message -->
         <?php if (isset($_SESSION['success_message'])) { ?>

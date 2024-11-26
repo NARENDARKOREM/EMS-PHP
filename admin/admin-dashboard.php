@@ -143,7 +143,7 @@ try {
                     <h3>Manage Users</h3>
                 </div>
             </a>
-            <a href="create_task.php">
+            <a href="../tasks/create_task.php">
                 <div class="create-task">
                     <h3>Create Task</h3>
                 </div>
@@ -153,7 +153,7 @@ try {
                     <h3>Chats</h3>
                 </div>
             </a>
-            <a href="all_tasks.php">
+            <a href="../tasks/all_tasks.php">
                 <div class="all-tasks">
                     <h3>All Tasks</h3>
                 </div>
@@ -179,14 +179,14 @@ try {
                 </div>
                 <div class="col-md-4">
                     <div class="admin-dashboard-box">
-                        <a href="all_tasks.php">
+                        <a href="../tasks/all_tasks.php">
                             <h4><?php echo $total_tasks; ?> No of All Tasks</h4>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="admin-dashboard-box">
-                        <a href="overdue.php">
+                        <a href="../tasks/overdue.php">
                             <h4><?php echo $overdue_tasks; ?> No of Overdue</h4>
                         </a>
                     </div>
@@ -195,14 +195,14 @@ try {
             <div class="row mb-4">
                 <div class="col-md-4">
                     <div class="admin-dashboard-box">
-                        <a href="deadlines.php">
+                        <a href="../tasks/deadlines.php">
                             <h4><?php echo $deadline_tasks; ?> No of Deadline</h4>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="admin-dashboard-box">
-                        <a href="due_today.php">
+                        <a href="../tasks/due_today.php">
                             <h4><?php echo $due_today_tasks; ?> No of Due Today</h4>
                         </a>
                     </div>
@@ -232,7 +232,7 @@ try {
                 </div>
                 <div class="col-md-4">
                     <div class="admin-dashboard-box">
-                        <a href="completed_tasks.php">
+                        <a href="../tasks/completed_tasks.php">
                             <h4><?php echo $completed_tasks; ?> No of Completed</h4>
                         </a>
                     </div>

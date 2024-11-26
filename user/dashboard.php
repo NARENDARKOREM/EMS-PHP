@@ -131,7 +131,7 @@ try {
                     <h3>Dashboard</h3>
                 </div>
             </a>
-            <a href="my_tasks.php">
+            <a href="../tasks/my_tasks.php">
                 <div class="profile">
                     <h3>My Tasks</h3>
                 </div>
@@ -166,7 +166,7 @@ try {
             <div class="row mb-4">
                 <div class="col-md-4">
                     <div class="dashboard-box">
-                        <a href="tasks.php">
+                        <a href="../tasks/tasks.php">
                             <h4><?php echo $total_tasks; ?> No of Tasks</h4>
                         </a>
                     </div>
@@ -189,7 +189,7 @@ try {
             <div class="row mb-4">
                 <div class="col-md-4">
                     <div class="dashboard-box">
-                        <a href="completed_tasks.php">
+                        <a href="../tasks/completed_tasks.php">
                             <h4><?php echo $completed_tasks; ?> No of Completed Tasks</h4>
                         </a>
                     </div>

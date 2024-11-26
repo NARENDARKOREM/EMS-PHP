@@ -17,7 +17,19 @@ try {
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
+
+// Back button Url
+$redirect_url = "../index.php"; 
+
+if (isset($_SESSION['admin_id'])) {
+    $redirect_url = "../admin/admin-dashboard.php"; 
+} elseif (isset($_SESSION['user_id'])) {
+    $redirect_url = "../user/dashboard.php"; 
+} elseif (isset($_SERVER['HTTP_REFERER'])) {
+    $redirect_url = $_SERVER['HTTP_REFERER']; 
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,6 +43,7 @@ try {
 
 <body>
     <div class="container mt-4">
+    <a href="<?php echo htmlspecialchars($redirect_url); ?>">Go back!</a>
         <h2>My Tasks</h2>
         <table class="table table-striped">
             <thead>

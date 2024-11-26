@@ -77,7 +77,8 @@ try {
                 <label for="duedate" class="form-label">Due Date</label>
                 <input type="date" class="form-control" id="duedate" name="duedate" value="<?php echo $task['duedate']; ?>" readonly>
             </div>
-            <button type="submit" class="btn btsn-primary">Update Status</button>
+            <button type="submit" class="btn btn-primary">Update Status</button>
+            <a href="../tasks/my_tasks.php">Cancel</a>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
