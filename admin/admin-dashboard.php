@@ -153,6 +153,11 @@ try {
                     <h3>Chats</h3>
                 </div>
             </a>
+            <a href="../leaves/manage_leaves.php">
+                <div class="chats">
+                    <h3>Manage Leaves</h3>
+                </div>
+            </a>
             <a href="../tasks/all_tasks.php">
                 <div class="all-tasks">
                     <h3>All Tasks</h3>

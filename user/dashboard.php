@@ -151,6 +151,12 @@ try {
                     <h3>Chats</h3>
                 </div>
             </a>
+            <a href="../leaves/leaves.php
+            ">
+                <div class="chats">
+                    <h3>Leaves</h3>
+                </div>
+            </a>
             <a href="../logout.php">
                 <div class="logout">
                     <h3>Logout</h3>
@@ -167,21 +173,21 @@ try {
                 <div class="col-md-4">
                     <div class="dashboard-box">
                         <a href="../tasks/tasks.php">
-                            <h4><?php echo $total_tasks; ?> No of Tasks</h4>
+                            <h4><?php echo $total_tasks; ?> Tasks</h4>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="dashboard-box">
                         <a href="../tasks/user_pending_tasks.php">
-                            <h4><?php echo $pending_tasks; ?> No of Pending Tasks</h4>
+                            <h4><?php echo $pending_tasks; ?> Pending Tasks</h4>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="dashboard-box">
                         <a href="../tasks/user_progress_tasks.php">
-                            <h4><?php echo $progress_tasks; ?> No of In Progress Tasks</h4>
+                            <h4><?php echo $progress_tasks; ?> In Progress Tasks</h4>
                         </a>
                     </div>
                 </div>
@@ -190,7 +196,7 @@ try {
                 <div class="col-md-4">
                     <div class="dashboard-box">
                         <a href="../tasks/user_completed_tasks.php">
-                            <h4><?php echo $completed_tasks; ?> No of Completed Tasks</h4>
+                            <h4><?php echo $completed_tasks; ?> Completed Tasks</h4>
                         </a>
                     </div>
                 </div>
