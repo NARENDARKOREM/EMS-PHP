@@ -22,6 +22,7 @@ try {
 
 <body>
     <div class="container mt-4">
+        <a href="../admin/admin-dashboard.php">Go back!</a>
         <h2>Task List</h2>
         <a href="create_task.php" class="btn btn-success mb-3">Create Task</a>
         <nav>

@@ -52,6 +52,7 @@ try {
 
 <body>
     <div class="container mt-4">
+        <a href="../admin/admin-dashboard.php">Go back!</a>
         <h2>Create Task</h2>
         
         <!-- Display success message -->

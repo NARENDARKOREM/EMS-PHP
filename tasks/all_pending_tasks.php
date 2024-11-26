@@ -1,10 +1,17 @@
 <?php
+session_start();
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: login_admin.php");
+    exit();
+}
+
 include '../includes/db.php';
 
 try {
-    $today = date('Y-m-d');
-    $stmt = $conn->prepare("SELECT tasks.id, tasks.title, tasks.description, tasks.duedate, tasks.status, users.name AS assigned_user FROM tasks INNER JOIN users ON tasks.assigned_to = users.id WHERE tasks.duedate < :today AND tasks.status != 'completed'");
-    $stmt->bindParam(':today', $today);
+    $stmt = $conn->prepare("SELECT tasks.id, tasks.title, tasks.description, tasks.duedate, users.name 
+                            FROM tasks 
+                            INNER JOIN users ON tasks.assigned_to = users.id 
+                            WHERE tasks.status = 'pending'");
     $stmt->execute();
     $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -18,14 +25,14 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overdue Tasks</title>
+    <title>Pending Tasks</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="container mt-4">
     <a href="../admin/admin-dashboard.php">Go back!</a>
-        <h2>Overdue Tasks</h2>
+        <h2>Pending Tasks</h2>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -33,7 +40,6 @@ try {
                     <th>Title</th>
                     <th>Description</th>
                     <th>Due Date</th>
-                    <th>Status</th>
                     <th>Assigned To</th>
                 </tr>
             </thead>
@@ -44,14 +50,12 @@ try {
                         <td><?php echo $task['title']; ?></td>
                         <td><?php echo $task['description']; ?></td>
                         <td><?php echo $task['duedate']; ?></td>
-                        <td><?php echo $task['status']; ?></td>
-                        <td><?php echo $task['assigned_user']; ?></td>
+                        <td><?php echo $task['name']; ?></td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

@@ -27,6 +27,8 @@ try {
 
 <body>
     <div class="container mt-4">
+    <a href="../admin/admin-dashboard.php">Go back!</a>
+
         <h2>Tasks with Upcoming Deadlines</h2>
         <table class="table table-striped">
             <thead>

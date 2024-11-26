@@ -54,7 +54,7 @@ try {
     $pending_tasks = $result['pending_tasks'];
     
     // Count tasks in progress
-    $stmt = $conn->prepare("SELECT COUNT(*) AS progress_tasks FROM tasks WHERE status = 'in_progress'");
+    $stmt = $conn->prepare("SELECT COUNT(*) AS progress_tasks FROM tasks WHERE status = 'in progress'");
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $progress_tasks = $result['progress_tasks'];
@@ -218,21 +218,21 @@ try {
             <div class="row mb-4">
                 <div class="col-md-4">
                     <div class="admin-dashboard-box">
-                        <a href="pending_tasks.php">
+                        <a href="../tasks/all_pending_tasks.php">
                             <h4><?php echo $pending_tasks; ?> No of Pending</h4>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="admin-dashboard-box">
-                        <a href="progress_tasks.php">
+                        <a href="../tasks/all_progress_tasks.php">
                             <h4><?php echo $progress_tasks; ?> No of Progress</h4>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="admin-dashboard-box">
-                        <a href="../tasks/completed_tasks.php">
+                        <a href="../tasks/all_completed_tasks.php">
                             <h4><?php echo $completed_tasks; ?> No of Completed</h4>
                         </a>
                     </div>

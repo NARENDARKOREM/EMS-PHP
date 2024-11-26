@@ -25,7 +25,7 @@ try {
     $pending_tasks = $result['pending_tasks'];
 
     // Count tasks in progress
-    $stmt = $conn->prepare("SELECT COUNT(*) AS progress_tasks FROM tasks WHERE assigned_to = :user_id AND status = 'in_progress'");
+    $stmt = $conn->prepare("SELECT COUNT(*) AS progress_tasks FROM tasks WHERE assigned_to = :user_id AND status = 'in progress'");
     $stmt->bindParam(':user_id', $user_id);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -161,7 +161,7 @@ try {
 
     <!-- Main Content -->
     <div class="main-content">
-        <h2>Welcome, <?php echo $_SESSION['user_name']; ?>!</h2>
+        <h2>Welcome, <?php echo $_SESSION['name']; ?>!</h2>
         <div class="container">
             <div class="row mb-4">
                 <div class="col-md-4">
@@ -173,14 +173,14 @@ try {
                 </div>
                 <div class="col-md-4">
                     <div class="dashboard-box">
-                        <a href="pending_tasks.php">
+                        <a href="../tasks/user_pending_tasks.php">
                             <h4><?php echo $pending_tasks; ?> No of Pending Tasks</h4>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="dashboard-box">
-                        <a href="progress_tasks.php">
+                        <a href="../tasks/user_progress_tasks.php">
                             <h4><?php echo $progress_tasks; ?> No of In Progress Tasks</h4>
                         </a>
                     </div>
@@ -189,7 +189,7 @@ try {
             <div class="row mb-4">
                 <div class="col-md-4">
                     <div class="dashboard-box">
-                        <a href="../tasks/completed_tasks.php">
+                        <a href="../tasks/user_completed_tasks.php">
                             <h4><?php echo $completed_tasks; ?> No of Completed Tasks</h4>
                         </a>
                     </div>

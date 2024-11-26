@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             //echo "Connecting to database<br>"; // Debugging output
             // $conn = include './includes/db.php';
-            $stmt = $conn->prepare("SELECT id, username, password FROM users WHERE email = :email");
+            $stmt = $conn->prepare("SELECT id, name, username, password FROM users WHERE email = :email");
             $stmt->bindParam(":email", $email);
             $stmt->execute();
 
@@ -44,11 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $hashedPassword = $row['password'];
                 $id = $row['id'];
                 $uname = $row['username'];
+                $name = $row['name'];
 
                 if (password_verify($password, $hashedPassword)) {
                     session_start();
                     $_SESSION['user_id'] = $id;
                     $_SESSION['user_name'] = $uname;
+                    $_SESSION['name'] = $name;
                     //echo "Redirecting to dashboard..."; // Debugging output
                     header("Location: ./user/dashboard.php");
                     ob_end_flush(); // Flush output buffer and send headers

@@ -45,6 +45,7 @@ try {
 
 <body>
     <div class="container mt-4">
+        <a href="admin-dashboard.php">Go back!</a>
         <h2>Manage Users</h2>
         <!-- Add User Button -->
         <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">
