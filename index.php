@@ -8,59 +8,142 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f4f4f9;
-        }
-
-        .header {
-            background-color: #6c757d;
-            padding: 1rem;
-            color: #ffffff;
-            text-align: center;
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .signup,
-        .login {
-            background-color: #6c757d;
-        }
-
-        .container {
-            margin-top: 2rem;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
         }
 
         .form-container {
-            background-color: #ffffff;
-            border-radius: 5px;
+            background-color: #fff;
+            border-radius: 15px;
             padding: 2rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
         }
 
         .form-switch {
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             margin-bottom: 2rem;
         }
 
         .form-switch button {
-            margin: 0 0.5rem;
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            border: none;
+            outline: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #loginButton.active,
+        #signupButton.active {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+        }
+
+        #loginButton,
+        #signupButton {
+            background: #e0e0e0;
+            color: #333;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #d6d6d6;
+        }
+
+        .form-wrapper {
+            position: relative;
+            width: 100%;
+            height: auto;
+        }
+
+        .form-wrapper form {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            transform: translateX(-100%);
+            transition: all 0.5s ease-in-out;
+        }
+
+        form.active {
+            opacity: 1;
+            transform: translateX(0);
+            position: relative;
+        }
+
+        form:not(.active) {
+            transform: translateX(100%);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 0.8rem;
+        }
+
+        .form-heading {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        @media (max-width: 576px) {
+            .form-container {
+                padding: 1.5rem;
+                max-width: 350px;
+            }
+
+            .form-switch button {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .form-heading {
+                font-size: 1.3rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="header">
-        <h1>Employee Management System</h1>
-    </div>
-    <div class="container">
-        <div class="form-container">
-            <div class="form-switch">
-                <button id="loginButton" class="btn btn-secondary">Login</button>
-                <button id="signupButton" class="btn btn-secondary">Sign Up</button>
-            </div>
-            <form id="loginForm" action="login.php" method="post">
+    <div class="form-container">
+        <div class="form-switch">
+            <button id="loginButton" class="active">Login</button>
+            <button id="signupButton">Sign Up</button>
+        </div>
+
+        <div class="form-wrapper">
+            <!-- Login Form -->
+            <form id="loginForm" class="active" action="login.php" method="post">
+                <div class="form-heading">Welcome Back!</div>
                 <div class="mb-3">
                     <label for="loginEmail" class="form-label">Email</label>
                     <input type="email" class="form-control" id="loginEmail" name="email" required>
@@ -69,9 +152,12 @@
                     <label for="loginPassword" class="form-label">Password</label>
                     <input type="password" class="form-control" id="loginPassword" name="password" required>
                 </div>
-                <button type="submit" class="btn login w-100">Login</button>
+                <button type="submit" class="btn w-100">Login</button>
             </form>
-            <form id="signupForm" style="display: none;" action="signup.php" method="post">
+
+            <!-- Signup Form -->
+            <form id="signupForm" action="signup.php" method="post">
+                <div class="form-heading">Create an Account</div>
                 <div class="mb-3">
                     <label for="signupName" class="form-label">Name</label>
                     <input type="text" class="form-control" id="signupName" name="name" required>
@@ -99,30 +185,31 @@
                         <option value="employee">Employee</option>
                     </select>
                 </div>
-                <button type="submit" class="btn signup w-100">Sign Up</button>
+                <button type="submit" class="btn w-100">Sign Up</button>
             </form>
         </div>
     </div>
 
     <script>
-        document.getElementById('loginButton').addEventListener('click', function() {
-            document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('signupForm').style.display = 'none';
+        const loginButton = document.getElementById('loginButton');
+        const signupButton = document.getElementById('signupButton');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+
+        loginButton.addEventListener('click', () => {
+            loginForm.classList.add('active');
+            signupForm.classList.remove('active');
+            loginButton.classList.add('active');
+            signupButton.classList.remove('active');
         });
 
-        document.getElementById('signupButton').addEventListener('click', function() {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('signupForm').style.display = 'block';
+        signupButton.addEventListener('click', () => {
+            signupForm.classList.add('active');
+            loginForm.classList.remove('active');
+            signupButton.classList.add('active');
+            loginButton.classList.remove('active');
         });
-
-        // Show login form if redirected after signup
-        if (window.location.search.includes('signup=success')) {
-            document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('signupForm').style.display = 'none';
-        }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>

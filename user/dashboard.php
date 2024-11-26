@@ -51,8 +51,15 @@ try {
     <title>User Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* General styles */
+        body {
+            background-color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Sidebar styling */
         .sidebar {
-            background-color: #343a40;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: #fff;
             height: 100vh;
             position: fixed;
@@ -66,42 +73,55 @@ try {
             display: block;
             padding: 1rem;
             color: #fff;
-            text-align: center;
+            /* text-align: center; */
             text-decoration: none;
+            font-size: 1.1rem;
         }
 
         .sidebar .sidebar-items a:hover {
-            background-color: #495057;
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
+        /* Main content styling */
         .main-content {
             margin-left: 250px;
             padding: 2rem;
         }
 
+        .main-content h2 {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        /* Dashboard box styling */
         .dashboard-box {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
             border-radius: 5px;
             padding: 2rem;
             text-align: center;
             cursor: pointer;
-        }
-
-        .dashboard-box a {
-            color: inherit;
-            text-decoration: none;
+            transition: transform 0.3s ease-in-out;
         }
 
         .dashboard-box:hover {
-            background-color: #e9ecef;
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .dashboard-box a {
+            color: #fff;
+            text-decoration: none;
         }
     </style>
 </head>
 
 <body>
     <!-- Sidebar -->
-    <div class="sidebar">
+     <div class="sidebar">
         <div class="logo">
             <h3>Logo</h3>
         </div>
@@ -139,6 +159,7 @@ try {
         </div>
     </div>
 
+    <!-- Main Content -->
     <div class="main-content">
         <h2>Welcome, <?php echo $_SESSION['user_name']; ?>!</h2>
         <div class="container">

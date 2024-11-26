@@ -38,56 +38,115 @@ try {
     <title>Chats</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            background-color: #f4f4f9;
+        }
+
         .chat-container {
             display: flex;
-            height: 80vh;
+            flex-direction: column;
+            height: 90vh;
         }
 
         .user-list {
-            width: 25%;
-            border-right: 1px solid #dee2e6;
+            width: 100%;
+            border-bottom: 1px solid #dee2e6;
             padding: 1rem;
             overflow-y: auto;
+            background-color: #f8f9fa;
         }
 
         .chat-area {
-            width: 75%;
             display: flex;
             flex-direction: column;
+            height: calc(100vh - 100px);
             padding: 1rem;
+            background-color: #ffffff;
         }
 
         .messages {
             flex-grow: 1;
             overflow-y: auto;
-            border-bottom: 1px solid #dee2e6;
             padding-bottom: 1rem;
         }
 
         .message-input {
             display: flex;
+            margin-top: auto;
         }
 
         .message-input textarea {
             flex-grow: 1;
             resize: none;
+            margin-right: 1rem;
         }
 
         .message {
-            padding: 0.5rem;
-            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
             margin: 0.5rem 0;
-            max-width: 60%;
+            max-width: 75%;
+            position: relative;
+            clear: both;
         }
 
         .message-sent {
-            background-color: #d1e7dd;
-            align-self: flex-end;
+            background-color: #007bff;
+            color: white;
+            float: right;
         }
 
         .message-received {
-            background-color: #f8f9fa;
-            align-self: flex-start;
+            background-color: #e9ecef;
+            float: left;
+        }
+
+        .message strong {
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .message small {
+            position: absolute;
+            bottom: -15px;
+            font-size: 0.75rem;
+            color: #6c757d;
+        }
+
+        .message-sent small {
+            right: 0;
+        }
+
+        .message-received small {
+            left: 0;
+        }
+
+        .user-list .list-group-item:hover {
+            background-color: #e9ecef;
+        }
+
+        @media (min-width: 768px) {
+            .chat-container {
+                flex-direction: row;
+            }
+
+            .user-list {
+                width: 25%;
+                border-right: 1px solid #dee2e6;
+                border-bottom: none;
+                background-color: #f8f9fa;
+            }
+
+            .chat-area {
+                width: 75%;
+                height: 100%;
+                padding: 1rem;
+                background-color: #ffffff;
+            }
+
+            .message {
+                max-width: 60%;
+            }
         }
     </style>
 </head>
@@ -96,6 +155,7 @@ try {
     <div class="container mt-4">
         <div class="chat-container">
             <div class="user-list">
+                <a href="../user/dashboard.php">Go back!</a>
                 <h4>Users</h4>
                 <ul class="list-group">
                     <li class="list-group-item active">Group Chat</li>
@@ -109,7 +169,7 @@ try {
                     <?php foreach ($messages as $message) { ?>
                         <div class="message <?php echo $message['sender_id'] == $user_id ? 'message-sent' : 'message-received'; ?>">
                             <strong><?php echo $message['username']; ?>:</strong> <?php echo $message['message']; ?>
-                            <small class="text-muted"><?php echo $message['created_at']; ?></small>
+                            <small><?php echo $message['created_at']; ?></small>
                         </div>
                     <?php } ?>
                 </div>

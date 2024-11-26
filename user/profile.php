@@ -28,8 +28,15 @@ try {
     <title>Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* General styles */
+        body {
+            background-color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Sidebar styling */
         .sidebar {
-            background-color: #343a40;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: #fff;
             height: 100vh;
             position: fixed;
@@ -43,21 +50,41 @@ try {
             display: block;
             padding: 1rem;
             color: #fff;
-            text-align: center;
+            /* text-align: center; */
             text-decoration: none;
+            font-size: 1.1rem;
         }
 
         .sidebar .sidebar-items a:hover {
-            background-color: #495057;
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
+        /* Main content styling */
         .main-content {
             margin-left: 250px;
             padding: 2rem;
         }
 
+        .main-content h2 {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        /* Table profile styling */
         .table-profile {
             margin-top: 2rem;
+        }
+
+        /* Profile table styling */
+        .table th, .table td {
+            color: #333;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f8f9fa;
         }
     </style>
 </head>
